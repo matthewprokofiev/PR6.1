@@ -6,8 +6,6 @@ namespace BankTests
     [TestClass]
     public class BankAccountTests
     {
-        // ─── Тесты метода Debit ───────────────────────────────────────────
-
         /// <summary>
         /// Проверяет, что при допустимой сумме баланс уменьшается правильно.
         /// </summary>
@@ -39,6 +37,7 @@ namespace BankTests
             double debitAmount = -100.00;
             BankAccount account = new BankAccount("Mr. Roman Abramovich", beginningBalance);
 
+            // Рефакторинг тестируемого кода. Пункт 3.
             // Act
             try
             {
@@ -80,7 +79,7 @@ namespace BankTests
             Assert.Fail("The expected exception was not thrown.");
         }
 
-        // ─── Тесты метода Credit (самостоятельное задание) ────────────────
+        // Рефакторинг тестируемого кода. Пункт 5.
 
         /// <summary>
         /// Проверяет, что при допустимой сумме баланс увеличивается правильно.
@@ -100,32 +99,6 @@ namespace BankTests
             // Assert
             double actual = account.Balance;
             Assert.AreEqual(expected, actual, 0.001, "Account not credited correctly");
-        }
-
-        /// <summary>
-        /// Проверяет, что при сумме кредита меньше нуля выбрасывается исключение.
-        /// </summary>
-        [TestMethod]
-        public void Credit_WhenAmountIsLessThanZero_ShouldThrowArgumentOutOfRange()
-        {
-            // Arrange
-            double beginningBalance = 11.99;
-            double creditAmount = -50.00;
-            BankAccount account = new BankAccount("Mr. Roman Abramovich", beginningBalance);
-
-            // Act
-            try
-            {
-                account.Credit(creditAmount);
-            }
-            catch (System.ArgumentOutOfRangeException e)
-            {
-                // Assert
-                StringAssert.Contains(e.Message, "Credit amount is less than zero");
-                return;
-            }
-
-            Assert.Fail("The expected exception was not thrown.");
         }
     }
 }

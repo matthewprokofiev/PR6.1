@@ -3,14 +3,14 @@
 namespace BankAccountNS
 {
     /// <summary>
-    /// Класс банковского счёта. Позволяет выполнять операции дебета и кредита.
+    /// Bank account demo class.
     /// </summary>
     public class BankAccount
     {
         private readonly string m_customerName;
         private double m_balance;
 
-        // Константы для сообщений об ошибках (нужны для рефакторинга тестов)
+        // Рефакторинг тестируемого кода. Пункт 1.
         public const string DebitAmountExceedsBalanceMessage = "Debit amount exceeds balance";
         public const string DebitAmountLessThanZeroMessage = "Debit amount is less than zero";
 
@@ -30,7 +30,6 @@ namespace BankAccountNS
         /// <summary>
         /// Имя владельца счёта.
         /// </summary>
-        /// <value>Строка с именем клиента</value>
         public string CustomerName
         {
             get { return m_customerName; }
@@ -39,14 +38,13 @@ namespace BankAccountNS
         /// <summary>
         /// Текущий баланс счёта.
         /// </summary>
-        /// <value>Числовое значение баланса</value>
         public double Balance
         {
             get { return m_balance; }
         }
 
         /// <summary>
-        /// Снимает денежные средства со счёта (дебет).
+        /// Снимает денежные средства со счёта.
         /// </summary>
         /// <param name="amount">Сумма для снятия</param>
         /// <exception cref="ArgumentOutOfRangeException">
@@ -54,6 +52,7 @@ namespace BankAccountNS
         /// </exception>
         public void Debit(double amount)
         {
+            // Рефакторинг тестируемого кода. Пункт 2.
             if (amount > m_balance)
             {
                 throw new ArgumentOutOfRangeException("amount", amount, DebitAmountExceedsBalanceMessage);
@@ -62,11 +61,12 @@ namespace BankAccountNS
             {
                 throw new ArgumentOutOfRangeException("amount", amount, DebitAmountLessThanZeroMessage);
             }
-            m_balance -= amount; // ← исправленная строка (было +=, это баг!)
+            // Создание и запуск метода теста. Пункт 3.
+            m_balance -= amount;
         }
 
         /// <summary>
-        /// Зачисляет денежные средства на счёт (кредит).
+        /// Зачисляет денежные средства на счёт.
         /// </summary>
         /// <param name="amount">Сумма для зачисления</param>
         /// <exception cref="ArgumentOutOfRangeException">
